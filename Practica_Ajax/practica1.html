@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 1</title>
+</head>
+
+<body>
+    <h1>Práctica 1: Faker API</h1>
+    <ul id="user-list">
+
+    </ul>
+    <script>
+        const userList = document.getElementById('user-list');
+
+        fetch('https://fakerapi.it/api/v2/persons?_quantity=1')
+            .then(response => response.json())
+            .then(data => mostrarData(data))
+            .catch(error => console.error('Error:', error));
+
+        const mostrarData = (data) => {
+            const user = data.data[0];
+            const userHTML = `
+                <li>
+                    <strong>Nombre:</strong> ${user.firstname} ${user.lastname}
+                </li>
+                <li>
+                    <strong>Email:</strong> ${user.email}
+                </li>
+                <li>
+                    <strong>Dirección:</strong> ${user.address.street}, ${user.address.city}
+                </li>
+                <li>
+                    <strong>País:</strong> ${user.address.country}
+                </li>
+            `;
+            userList.innerHTML = userHTML;
+        };
+    </script>
+</body>
+
+</html>
