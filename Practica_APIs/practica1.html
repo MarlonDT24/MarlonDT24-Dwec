@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 1</title>
+</head>
+<body>
+    <h1>En 5 segundos se el redigirá al video</h1>
+    <p id="contador">5</p>
+    <script>
+        function timeout(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function iniciarCuentaRegresiva() {
+            for (let i = 5; i >= 0; i--) {
+                document.getElementById('contador').innerText = i;
+                await timeout(1000);
+            }
+            mostrarNotificacion();
+        }
+
+        function mostrarNotificacion() {
+            if (Notification.permission === 'granted') {
+                let notificacion = new Notification("¡Su video esta disponible!", {
+                    body: "Haga clic para verlo ahora.",
+                    icon: "video_icon.png"
+                });
+                notificacion.onclick = () => {
+                    window.location.href = "video.html";
+                };
+            } else {
+                Notification.requestPermission().then(permiso => {
+                    if (permiso === 'granted') mostrarNotificacion();
+                });
+            }
+        }
+
+        iniciarCuentaRegresiva();
+    </script>
+</body>
+</html>

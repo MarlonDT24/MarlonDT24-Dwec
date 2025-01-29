@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+</head>
+<body>
+    <h1>Reproductor de Video</h1>
+    <video id="miVideo" width="640" height="360" controls>
+        <source src="videoAPIs.mp4" type="video/mp4">
+        Tu navegador no soporta la etiqueta de video.
+    </video>
+    <p id="duracion"></p>
+    <script>
+        const video = document.getElementById('miVideo');
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+
+        video.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            let minutos = Math.floor(video.duration / 60);
+            let segundos = Math.floor(video.duration % 60);
+            document.getElementById('duracion').innerText = `Duración: ${minutos}m ${segundos}s`;
+        });
+    </script>
+</body>
+</html>
